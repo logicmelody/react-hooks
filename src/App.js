@@ -1,33 +1,42 @@
-import React, { useState, } from 'react';
+import React, { useState, useCallback, } from 'react';
 
-function App({
-	initialCount,
-}) {
-	const [count, setCount] = useState(initialCount);
+import Title from './components/title';
+import Count from './components/count';
+import CountBtn from './components/count-btn';
+import Age from './components/age';
+import AgeBtn from './components/age-btn';
+
+function App() {
+	const [count, setCount] = useState(0);
+	const [age, setAge] = useState(10);
+
+	const incrementCount = useCallback(() => {
+		setCount(count => count + 1);
+	}, []);
+
+	const incrementAge = useCallback(() => {
+		setAge(age => age + 1);
+	}, []);
 
 	return (
 		<>
-			<h3>
-				Count: {count}
-			</h3>
+			<Title />
 
-			<button onClick={() => {
-				setCount(count + 1);
-			}}>
-				Add one +1
-			</button>
+			<Count
+				count={count}
+			/>
 
-			<button onClick={() => {
-				setCount((prevCount) => prevCount - 1);
-			}}>
-				Rest one -1
-			</button>
+			<CountBtn
+				handleCount={incrementCount}
+			/>
 
-			<button onClick={() => {
-				setCount(initialCount);
-			}}>
-				Reset
-			</button>
+			<Age
+				age={age}
+			/>
+
+			<AgeBtn
+				handleAge={incrementAge}
+			/>
 		</>
 	);
 }
