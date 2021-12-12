@@ -1,44 +1,36 @@
-import React, { useState, useCallback, } from 'react';
-
-import Title from './components/title';
-import Count from './components/count';
-import CountBtn from './components/count-btn';
-import Age from './components/age';
-import AgeBtn from './components/age-btn';
+import React, { useRef, } from 'react';
 
 function App() {
-	const [count, setCount] = useState(0);
-	const [age, setAge] = useState(10);
+	const textInput = useRef(null);
 
-	const incrementCount = useCallback(() => {
-		setCount(count => count + 1);
-	}, []);
-
-	const incrementAge = useCallback(() => {
-		setAge(age => age + 1);
-	}, []);
+	function triggerHandler() {
+		console.log(textInput);
+	}
 
 	return (
 		<>
-			<Title />
+			<h1>Form:</h1>
 
-			<Count
-				count={count}
+			<InputComponent
+				ref={textInput}
 			/>
 
-			<CountBtn
-				handleCount={incrementCount}
-			/>
-
-			<Age
-				age={age}
-			/>
-
-			<AgeBtn
-				handleAge={incrementAge}
-			/>
+			<button
+				onClick={triggerHandler}
+			>
+				Trigger
+			</button>
 		</>
 	);
 }
+
+const InputComponent = React.forwardRef(({}, ref) => {
+	return (
+		<input
+			ref={ref}
+			type="text"
+		/>
+	);
+});
 
 export default App;
